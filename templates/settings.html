@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block title %}
+    Settings
+{% endblock %}
+{% block main %}
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".modal">Open Settings</button>
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/settings" onsubmit="change()">
+                    <div class="mb-3">
+                        <label for="backgroundColour">Select a background colour:</label>
+                        <input name ='colour' id="backgroundColour" type="color" value="{{ settings.colour }}">
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="pomodoroLength">Enter in your preffered pomodoro length:</label>
+                        <input name="pomodoroLength" value="{{ settings.pomodoroLength }}" min="1" max="60" id="pomodoroLength" type="number">
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="breakLength">Enter in your preffered break length:</label>
+                        <input name="breakLength" value="{{ settings.breakLength }}" min="0" max="45" id="breakLength" type="number">
+                    </div>
+                    <hr>
+                    {% if settings.togglePomodoro %}
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="pomodoro">Start pomodoro session automatically</label>
+                        <input name="pomodoro" checked class="form-check-input" type="checkbox" id="pomodoro">
+                    </div>
+                    {% else %}
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="pomodoro">Start pomodoro session automatically</label>
+                        <input name="pomodoro" class="form-check-input" type="checkbox" id="pomodoro">
+                    </div>
+                    {% endif %}
+                    <hr>
+                    {% if settings.toggleBreak %}
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="break">Start break automatically</label>
+                        <input name="break" checked class="form-check-input" type="checkbox" id="break">
+                    </div>
+                    {% else %}
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="break">Start break automatically</label>
+                        <input name="break" class="form-check-input" type="checkbox" id="break">
+                    </div>
+                    {% endif %}
+                    <hr>
+                    {% if settings.darkMode %}
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="darkMode">Toggle dark mode</label>
+                        <input name="darkMode" checked class="form-check-input" type="checkbox" id="darkMode">
+                    </div>
+                    {% else %}
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="darkMode">Toggle dark mode</label>
+                        <input name="darkMode" class="form-check-input" type="checkbox" id="darkMode">
+                    </div>
+                    {% endif %}
+                    <hr>
+                    <strong>Alarm Sound</strong>
+                    {% for alarm in alarms %}
+                    {% if alarm == settings.alarm %}
+                    <div>
+                        <input required checked type="radio" name="alarm" id="{{ alarm }}" value="{{ alarm }}">
+                        <label for="{{ alarm }}">{{ alarm }}</label>
+                    <div>
+                    {% else %}
+                    <div>
+                        <input required type="radio" name="alarm" id="{{ alarm }}" value="{{ alarm }}">
+                        <label for="{{ alarm }}">{{ alarm }}</label>
+                    <div>
+                    {% endif %}
+                    {% endfor %}
+                    <hr>
+                    <div>
+                        <label for="volume">Alarm volume intensity</label>
+                        <input value="{{ settings.volume }}" name="volume" type="range" id="volume" min="0" max="100">
+                        <small id="poo">{{ settings.volume }}</small>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- CREATE TABLE settings (id INTEGER NOT NULL, darkMode BOOL DEFAULT FALSE, volume INTEGER DEFAULT 100, pomodoroLength INTEGER DEFAULT 25, breakLength INTEGER DEFAULT 5, colour TEXT DEFAULT '#FFF', alarm TEXT DEFAULT 'clock', toggleBreak BOOL DEFAULT FALSE, togglePomodoro BOOL DEFAULT FALSE, FOREIGN KEY (id) REFERENCES users(id)); -->

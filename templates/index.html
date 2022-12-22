@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+<!-- The dataset read-only property of the HTMLElement interface provides read/write access to custom data attributes (data-*) on elements. -->
+<div id="autoBreak" data-status='{{ settings.toggleBreak|tojson }}'></div>
+<div id="autoPomodoro" data-status='{{ settings.togglePomodoro|tojson }}'></div>
+<div id="startTime" data-time='{{ settings.pomodoroLength|tojson }}'></div>
+<div id="breakTime" data-time='{{ settings.breakLength|tojson }}'></div>
+<div id="alarm" data-alarm='{{ settings.alarm|tojson }}'></div>
+<div id="volume" data-volume='{{ settings.volume|tojson }}'></div>
+<h1>Pymodoro</h1>
+<h5 class="countdownElement">{{ settings.pomodoroLength }}:00</h5>
+<br>
+<button id="startstop" type="submit" class="btn btn-primary btn-lg btn-block">Start!</button>
+<p>
+    Press start and stop to start and pause your pomodoro session respectively!
+    <br>
+    Once you reach your break, press start if automatic break is off, and take that earned break!
+</p>
+{% endblock %}

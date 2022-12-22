@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}
+    Log History
+{% endblock %}
+{% block main %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date & Time (Greenwich Mean Time)</th>
+            <th class="text-start">Log Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in history %}
+        <tr>
+            <td>{{ entry.time }}</td>
+            <td class="text-start">{{ entry.type }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
